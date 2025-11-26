@@ -1,0 +1,89 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+/* Highlight.js custom dark theme */
+.hljs {
+  color: #c9d1d9;
+  background: transparent;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #8b949e;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-type {
+  color: #ff7b72;
+}
+
+.hljs-string,
+.hljs-attr,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+  color: #a5d6ff;
+}
+
+.hljs-number,
+.hljs-literal {
+  color: #79c0ff;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-name {
+  color: #d2a8ff;
+}
+
+.hljs-function,
+.hljs-title.function_ {
+  color: #d2a8ff;
+}
+
+.hljs-variable,
+.hljs-template-variable {
+  color: #ffa657;
+}
+
+.hljs-attribute {
+  color: #7ee787;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #ffa657;
+}
+
+.hljs-meta {
+  color: #79c0ff;
+}
+
+.hljs-deletion {
+  color: #ffa198;
+  background-color: rgba(255, 129, 130, 0.15);
+}
+
+.hljs-addition {
+  color: #7ee787;
+  background-color: rgba(63, 185, 80, 0.15);
+}
+
+.hljs-operator,
+.hljs-punctuation {
+  color: #c9d1d9;
+}
+
+.hljs-property {
+  color: #79c0ff;
+}
+
+.hljs-selector-class {
+  color: #7ee787;
+}
+
+.hljs-selector-id {
+  color: #ffa657;
+}
