@@ -287,7 +287,7 @@ export const TasksPage = ({ activeView, rawText, sections, onRawTextChange, onSe
                         className="flex items-center gap-2 text-slate-400 hover:text-slate-200 transition-colors"
                     >
                         <ArrowLeft size={20} />
-                        <span>Zpět na úkoly</span>
+                        <span>Back to tasks</span>
                     </button>
                     {isEditingReq && (
                         <div className="flex gap-2">
@@ -296,14 +296,14 @@ export const TasksPage = ({ activeView, rawText, sections, onRawTextChange, onSe
                                 className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-700 transition-colors text-sm"
                             >
                                 <X size={16} />
-                                Zrušit
+                                Cancel
                             </button>
                             <button
                                 onClick={handleSaveRequirement}
                                 className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors text-sm"
                             >
                                 <Save size={16} />
-                                Uložit změny
+                                Save Changes
                             </button>
                         </div>
                     )}
@@ -352,7 +352,7 @@ export const TasksPage = ({ activeView, rawText, sections, onRawTextChange, onSe
                                     <button
                                         onClick={handleStartEditReq}
                                         className="p-2 bg-slate-900 hover:bg-slate-700 text-indigo-400 rounded-full border border-indigo-500/30 transition-colors"
-                                        title="Upravit requirement"
+                                        title="Edit requirement"
                                     >
                                         <Edit3 size={14} />
                                     </button>
@@ -537,7 +537,7 @@ export const TasksPage = ({ activeView, rawText, sections, onRawTextChange, onSe
                     ))}
                     {(!requirementSections || requirementSections.filter(s => s.type === 'requirement').length === 0) && (
                         <p className="text-slate-500 text-sm text-center py-4">
-                            Žádné requirements nenalezeny. Načtěte requirements.md v Requirements stránce.
+                            No requirements found. Load requirements.md in the Requirements page.
                         </p>
                     )}
                 </div>

@@ -51,7 +51,7 @@ export const GlossaryEditor: React.FC<GlossaryEditorProps> = ({ items, onChange 
                             </div>
                             <div className="md:col-span-2">
                                 <label className="text-[10px] uppercase font-bold text-slate-500 mb-1 block">Definition</label>
-                                {/* ZMĚNA: Použití textarea pro delší definice */}
+                                {/* Using textarea for longer definitions */}
                                 <textarea
                                     className="w-full bg-transparent border-b border-slate-700 focus:border-slate-500 outline-none text-slate-300 text-sm py-1 resize-y min-h-[50px] overflow-hidden"
                                     rows={1}

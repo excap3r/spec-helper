@@ -1,73 +1,90 @@
-# React + TypeScript + Vite
+# SpecBoard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A visual requirements document editor for creating and managing software specifications with Gherkin-style acceptance criteria.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss)
+![Vite](https://img.shields.io/badge/Vite-Rolldown-646CFF?logo=vite)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview
 
-## React Compiler
+SpecBoard transforms Markdown-based requirements documents into an interactive board view. It supports structured editing of requirements, design documents, and implementation tasks with real-time parsing and syntax highlighting.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- **Requirements Management** - Parse and visualize requirements with user stories and acceptance criteria
+- **Gherkin Syntax Support** - Built-in syntax highlighting for WHEN/IF/GIVEN conditions and SHALL/SHOULD/MUST actions
+- **Design Documents** - Manage technical design specifications with code block support
+- **Task Tracking** - Track implementation tasks with subtasks and requirement linking
+- **Dual View Mode** - Toggle between visual board view and raw Markdown editing
+- **Copy to Clipboard** - Export serialized documents with one click
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js 18+
+- npm or yarn
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/excap3r/spec-helper.git
+cd spec-helper
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Available Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev      # Start development server
+npm run build    # Type-check and build for production
+npm run lint     # Run ESLint
+npm run preview  # Preview production build
 ```
+
+## Usage
+
+1. **Requirements Page** - Paste your `requirements.md` content in the Raw view, then switch to Board view to visualize and edit
+2. **Design Page** - Load your `design.md` for technical specifications
+3. **Tasks Page** - Track implementation progress with `tasks.md`
+
+### Document Format
+
+SpecBoard expects Markdown documents following this structure:
+
+```markdown
+# Introduction
+Project overview and context...
+
+## Glossary
+- **Term**: Definition
+
+## Requirements
+
+### Requirement 1: Feature Name
+**User Story:** As a user, I want...
+
+#### Acceptance Criteria
+1. WHEN user clicks button, THE System SHALL display confirmation
+2. IF input is invalid, THE System SHOULD show error message
+```
+
+## Tech Stack
+
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **Vite (Rolldown)** - Build tooling
+- **Tailwind CSS v4** - Styling
+- **Lucide React** - Icons
+
+## License
+
+MIT
