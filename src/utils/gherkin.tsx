@@ -26,10 +26,9 @@ export const highlightSyntax = (text: string) => {
         if (KEYWORDS.logic.includes(upper)) {
             return applyHighlight('text-orange-400');
         }
-        // Zvýraznění entity ('THE') se v editaci omezí na prefix box pro lepší přehlednost
-        // if (KEYWORDS.entity.includes(upper)) {
-        //   return applyHighlight('text-blue-300 opacity-70 tracking-wider');
-        // }
+        if (KEYWORDS.entity.includes(upper)) {
+            return applyHighlight('text-cyan-400');
+        }
         return part;
     });
 };
@@ -51,6 +50,9 @@ export const highlightSyntaxToHTML = (text: string): string => {
         }
         if (KEYWORDS.logic.includes(upper)) {
             return `<span class="font-bold text-orange-400">${part}</span>`;
+        }
+        if (KEYWORDS.entity.includes(upper)) {
+            return `<span class="font-bold text-cyan-400">${part}</span>`;
         }
         return part;
     }).join('');
