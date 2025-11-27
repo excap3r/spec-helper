@@ -1,15 +1,46 @@
-# SpecBoard
+# SpecHelper
 
 A visual requirements document editor for creating and managing software specifications with Gherkin-style acceptance criteria.
 
+![npm](https://img.shields.io/npm/v/spec-helper)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss)
-![Vite](https://img.shields.io/badge/Vite-Rolldown-646CFF?logo=vite)
+![Electron](https://img.shields.io/badge/Electron-39-47848F?logo=electron)
 
-## Overview
+## Installation
 
-SpecBoard transforms Markdown-based requirements documents into an interactive board view. It supports structured editing of requirements, design documents, and implementation tasks with real-time parsing and syntax highlighting.
+```bash
+npm install -g spec-helper
+```
+
+## Usage
+
+Navigate to a directory containing your spec files and run:
+
+```bash
+spec-helper .
+```
+
+Or specify a path directly:
+
+```bash
+spec-helper /path/to/your/specs
+```
+
+### CLI Options
+
+```bash
+spec-helper --help      # Show help
+spec-helper --version   # Show version
+```
+
+## Expected Files
+
+SpecHelper looks for these Markdown files in the target directory:
+
+- `requirements.md` - Requirements with user stories and acceptance criteria
+- `design.md` - Technical design specifications
+- `tasks.md` - Implementation tasks and subtasks
 
 ## Features
 
@@ -18,47 +49,12 @@ SpecBoard transforms Markdown-based requirements documents into an interactive b
 - **Design Documents** - Manage technical design specifications with code block support
 - **Task Tracking** - Track implementation tasks with subtasks and requirement linking
 - **Dual View Mode** - Toggle between visual board view and raw Markdown editing
+- **File Sync** - Save changes directly back to your local files
 - **Copy to Clipboard** - Export serialized documents with one click
 
-## Getting Started
+## Document Format
 
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/excap3r/spec-helper.git
-cd spec-helper
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-### Available Scripts
-
-```bash
-npm run dev      # Start development server
-npm run build    # Type-check and build for production
-npm run lint     # Run ESLint
-npm run preview  # Preview production build
-```
-
-## Usage
-
-1. **Requirements Page** - Paste your `requirements.md` content in the Raw view, then switch to Board view to visualize and edit
-2. **Design Page** - Load your `design.md` for technical specifications
-3. **Tasks Page** - Track implementation progress with `tasks.md`
-
-### Document Format
-
-SpecBoard expects Markdown documents following this structure:
+### requirements.md
 
 ```markdown
 # Introduction
@@ -77,10 +73,70 @@ Project overview and context...
 2. IF input is invalid, THE System SHOULD show error message
 ```
 
+### design.md
+
+```markdown
+# Technical Design
+
+## Component: Authentication
+Description of the component...
+
+### Interface
+```typescript
+interface User {
+  id: string;
+  email: string;
+}
+```
+
+### tasks.md
+
+```markdown
+# Implementation Tasks
+
+## Task 1: Setup Authentication
+- [ ] Subtask 1.1: Create login form
+- [x] Subtask 1.2: Add validation
+```
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+
+- npm
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/jakubsladek/spec-helper.git
+cd spec-helper
+
+# Install dependencies
+npm install
+
+# Start development (web only)
+npm run dev
+
+# Start Electron development
+npm run electron:dev
+```
+
+### Available Scripts
+
+```bash
+npm run dev              # Start Vite dev server
+npm run build            # Build for production
+npm run electron:dev     # Start Electron in dev mode
+npm run electron:build   # Build Electron app for distribution
+```
+
 ## Tech Stack
 
 - **React 19** - UI framework
-- **TypeScript** - Type safety
+- **TypeScript 5.9** - Type safety
+- **Electron 39** - Desktop app framework
 - **Vite (Rolldown)** - Build tooling
 - **Tailwind CSS v4** - Styling
 - **Lucide React** - Icons

@@ -1,17 +1,37 @@
 {
   "name": "spec-helper",
-  "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "description": "Visual requirements document editor for software specifications",
+  "author": "Jakub Sladek",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jakubsladek/spec-helper.git"
+  },
+  "keywords": [
+    "requirements",
+    "specifications",
+    "gherkin",
+    "documentation",
+    "electron"
+  ],
   "type": "module",
   "main": "dist-electron/main.cjs",
   "bin": {
     "spec-helper": "./bin/spec-helper.js"
   },
+  "files": [
+    "bin",
+    "dist",
+    "dist-electron"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "prepublishOnly": "npm run build && npm run electron:compile",
+    "postinstall": "node bin/postinstall.js",
     "electron:compile": "tsc -p electron/tsconfig.json && mv dist-electron/main.js dist-electron/main.cjs && mv dist-electron/preload.js dist-electron/preload.cjs",
     "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && npm run electron:start\"",
     "electron:start": "npm run electron:compile && VITE_DEV_SERVER_URL=http://localhost:5173 electron .",
@@ -19,6 +39,7 @@
     "electron:preview": "npm run electron:compile && electron ."
   },
   "dependencies": {
+    "electron": "^39.2.4",
     "highlight.js": "^11.11.1",
     "lucide-react": "^0.555.0",
     "react": "^19.2.0",
@@ -33,7 +54,6 @@
     "@vitejs/plugin-react": "^5.1.1",
     "autoprefixer": "^10.4.22",
     "concurrently": "^9.2.1",
-    "electron": "^39.2.4",
     "electron-builder": "^26.0.12",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
