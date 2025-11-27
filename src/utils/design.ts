@@ -1,4 +1,4 @@
-import type { DesignSection, DesignComponent } from '../types';
+import type { DesignSection } from '../types';
 
 export const parseDesignDocument = (text: string): DesignSection[] => {
     const sections: DesignSection[] = [];

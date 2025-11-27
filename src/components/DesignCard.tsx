@@ -30,7 +30,6 @@ const renderMarkdownContent = (content: string, maxLines?: number) => {
     const elements: React.ReactNode[] = [];
     let inCodeBlock = false;
     let codeLines: string[] = [];
-    let codeLanguage = '';
 
     const renderInlineMarkdown = (text: string) => {
         const parts: React.ReactNode[] = [];
@@ -66,7 +65,6 @@ const renderMarkdownContent = (content: string, maxLines?: number) => {
                 inCodeBlock = false;
             } else {
                 inCodeBlock = true;
-                codeLanguage = line.trim().replace('```', '');
             }
             return;
         }
