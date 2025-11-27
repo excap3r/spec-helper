@@ -1,10 +1,9 @@
 # SpecHelper
 
-A visual requirements document editor for creating and managing software specifications with Gherkin-style acceptance criteria.
+A visual editor for [Kiro](https://kiro.dev) specification files. View and edit your requirements, design documents, and tasks in an interactive board interface instead of raw Markdown.
 
 ![npm](https://img.shields.io/npm/v/spec-helper)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)
 ![Electron](https://img.shields.io/badge/Electron-39-47848F?logo=electron)
 
 ## Installation
@@ -13,19 +12,33 @@ A visual requirements document editor for creating and managing software specifi
 npm install -g spec-helper
 ```
 
-## Usage
+## Usage with Kiro Specs
 
-Navigate to a directory containing your spec files and run:
+Kiro generates specification files in `.kiro/specs/<feature-name>/` directory. SpecHelper provides a visual interface for these files.
 
 ```bash
+# Navigate to your spec folder and run
+cd .kiro/specs/my-feature
 spec-helper .
+
+# Or specify the path directly
+spec-helper .kiro/specs/my-feature
+
+# Or use absolute path
+spec-helper /path/to/project/.kiro/specs/my-feature
 ```
 
-Or specify a path directly:
+### Example
 
 ```bash
-spec-helper /path/to/your/specs
+# From your project root
+spec-helper .kiro/specs/external-product-search
 ```
+
+This opens a visual board with three tabs:
+- **Requirements** - User stories and acceptance criteria from `requirements.md`
+- **Design** - Technical specifications from `design.md`
+- **Tasks** - Implementation tasks from `tasks.md`
 
 ### CLI Options
 
@@ -34,31 +47,32 @@ spec-helper --help      # Show help
 spec-helper --version   # Show version
 ```
 
-## Expected Files
-
-SpecHelper looks for these Markdown files in the target directory:
-
-- `requirements.md` - Requirements with user stories and acceptance criteria
-- `design.md` - Technical design specifications
-- `tasks.md` - Implementation tasks and subtasks
-
 ## Features
 
-- **Requirements Management** - Parse and visualize requirements with user stories and acceptance criteria
-- **Gherkin Syntax Support** - Built-in syntax highlighting for WHEN/IF/GIVEN conditions and SHALL/SHOULD/MUST actions
-- **Design Documents** - Manage technical design specifications with code block support
-- **Task Tracking** - Track implementation tasks with subtasks and requirement linking
-- **Dual View Mode** - Toggle between visual board view and raw Markdown editing
-- **File Sync** - Save changes directly back to your local files
-- **Copy to Clipboard** - Export serialized documents with one click
+- **Visual Board View** - See all requirements, design specs, and tasks at a glance
+- **Gherkin Syntax Highlighting** - WHEN/IF/GIVEN conditions and SHALL/SHOULD/MUST actions are color-coded
+- **Dual View Mode** - Toggle between visual board and raw Markdown editing
+- **File Sync** - Changes are saved directly back to your spec files
+- **macOS Native** - Seamless integration with macOS window controls
 
-## Document Format
+## Kiro Spec Files
 
-### requirements.md
+SpecHelper works with the standard Kiro spec structure:
+
+```
+.kiro/
+└── specs/
+    └── my-feature/
+        ├── requirements.md    # User stories & acceptance criteria
+        ├── design.md          # Technical design & architecture
+        └── tasks.md           # Implementation tasks & subtasks
+```
+
+### requirements.md format
 
 ```markdown
 # Introduction
-Project overview and context...
+Feature overview and context...
 
 ## Glossary
 - **Term**: Definition
@@ -73,7 +87,7 @@ Project overview and context...
 2. IF input is invalid, THE System SHOULD show error message
 ```
 
-### design.md
+### design.md format
 
 ```markdown
 # Technical Design
@@ -88,8 +102,9 @@ interface User {
   email: string;
 }
 ```
+```
 
-### tasks.md
+### tasks.md format
 
 ```markdown
 # Implementation Tasks
@@ -101,45 +116,20 @@ interface User {
 
 ## Development
 
-### Prerequisites
-
-- Node.js 18+
-- npm
-
-### Setup
-
 ```bash
-# Clone the repository
+# Clone and install
 git clone https://github.com/jakubsladek/spec-helper.git
 cd spec-helper
-
-# Install dependencies
 npm install
 
-# Start development (web only)
-npm run dev
+# Development
+npm run dev              # Web only
+npm run electron:dev     # Electron app
 
-# Start Electron development
-npm run electron:dev
+# Build
+npm run build            # Production build
+npm run electron:build   # Electron distribution
 ```
-
-### Available Scripts
-
-```bash
-npm run dev              # Start Vite dev server
-npm run build            # Build for production
-npm run electron:dev     # Start Electron in dev mode
-npm run electron:build   # Build Electron app for distribution
-```
-
-## Tech Stack
-
-- **React 19** - UI framework
-- **TypeScript 5.9** - Type safety
-- **Electron 39** - Desktop app framework
-- **Vite (Rolldown)** - Build tooling
-- **Tailwind CSS v4** - Styling
-- **Lucide React** - Icons
 
 ## License
 
