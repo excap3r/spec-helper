@@ -26,7 +26,9 @@ export const highlightSyntax = (text: string) => {
         if (KEYWORDS.logic.includes(upper)) {
             return applyHighlight('text-orange-400');
         }
-        if (KEYWORDS.entity.includes(upper)) {
+        // Pouze velké THE (case-sensitive)
+        const cleaned = part.replace(/[^A-Za-z]/g, '');
+        if (KEYWORDS.entity.includes(cleaned) && cleaned === cleaned.toUpperCase()) {
             return applyHighlight('text-cyan-400');
         }
         return part;
@@ -51,7 +53,9 @@ export const highlightSyntaxToHTML = (text: string): string => {
         if (KEYWORDS.logic.includes(upper)) {
             return `<span class="font-bold text-orange-400">${part}</span>`;
         }
-        if (KEYWORDS.entity.includes(upper)) {
+        // Pouze velké THE (case-sensitive)
+        const cleaned = part.replace(/[^A-Za-z]/g, '');
+        if (KEYWORDS.entity.includes(cleaned) && cleaned === cleaned.toUpperCase()) {
             return `<span class="font-bold text-cyan-400">${part}</span>`;
         }
         return part;
