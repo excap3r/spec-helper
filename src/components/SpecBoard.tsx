@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
     Layout,
     Copy,
@@ -8,7 +8,9 @@ import {
     Code,
     FileText,
     Layers,
-    ListTodo
+    ListTodo,
+    Save,
+    FolderOpen
 } from 'lucide-react';
 import type { Section, DesignSection, TaskSection } from '../types';
 import { parseDocument, serializeDocument } from '../utils/document';
@@ -22,13 +24,24 @@ import { IntroCard } from './IntroCard';
 import { RequirementCard } from './RequirementCard';
 import { DesignPage } from './DesignPage';
 import { TasksPage } from './TasksPage';
+import { useElectronFiles } from '../hooks/useElectronFiles';
 
 type PageType = 'requirements' | 'design' | 'tasks';
 type ViewType = 'board' | 'raw';
 
 export default function SpecBoard() {
+    const {
+        isElectron,
+        workingDir,
+        requirementsContent,
+        designContent,
+        tasksContent,
+        saveFile,
+        isLoading,
+    } = useElectronFiles();
+
     const [activePage, setActivePage] = useState<PageType>('requirements');
-    const [activeView, setActiveView] = useState<ViewType>('raw');
+    const [activeView, setActiveView] = useState<ViewType>(() => isElectron ? 'board' : 'raw');
     
     // Requirements state
     const [rawText, setRawText] = useState('');
@@ -36,6 +49,7 @@ export default function SpecBoard() {
     const [editingSection, setEditingSection] = useState<Section | null>(null);
     const [editForm, setEditForm] = useState<any>({});
     const [showCopyFeedback, setShowCopyFeedback] = useState(false);
+    const [showSaveFeedback, setShowSaveFeedback] = useState(false);
 
     // Design state
     const [designRawText, setDesignRawText] = useState('');
@@ -44,6 +58,16 @@ export default function SpecBoard() {
     // Tasks state
     const [tasksRawText, setTasksRawText] = useState('');
     const [tasksSections, setTasksSections] = useState<TaskSection[]>([]);
+
+    // Load content from Electron
+    useEffect(() => {
+        if (requirementsContent) setRawText(requirementsContent);
+        if (designContent) setDesignRawText(designContent);
+        if (tasksContent) setTasksRawText(tasksContent);
+        if (isElectron && (requirementsContent || designContent || tasksContent)) {
+            setActiveView('board');
+        }
+    }, [requirementsContent, designContent, tasksContent, isElectron]);
 
     useEffect(() => {
         setSections(parseDocument(rawText));
@@ -99,9 +123,32 @@ export default function SpecBoard() {
         setTimeout(() => setShowCopyFeedback(false), 2000);
     };
 
+    const handleSaveAll = useCallback(async () => {
+        if (!isElectron) return;
+        
+        const results = await Promise.all([
+            saveFile('requirements.md', rawText),
+            saveFile('design.md', designRawText),
+            saveFile('tasks.md', tasksRawText),
+        ]);
+        
+        if (results.every(Boolean)) {
+            setShowSaveFeedback(true);
+            setTimeout(() => setShowSaveFeedback(false), 2000);
+        }
+    }, [isElectron, saveFile, rawText, designRawText, tasksRawText]);
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+                <div className="text-slate-400">Loading files...</div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-indigo-500/30">
-            <header className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-6 py-4">
+            <header className={`sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-6 py-4 ${isElectron ? 'pl-24' : ''}`}>
                 <div className="max-w-[1600px] mx-auto flex items-center">
                     {/* Logo - Left */}
                     <div className="flex items-center gap-3">
@@ -110,7 +157,13 @@ export default function SpecBoard() {
                         </div>
                         <div>
                             <h1 className="font-bold text-lg tracking-tight">SpecBoard</h1>
-                            <p className="text-xs text-slate-500">Requirements Visualization & Editing</p>
+                            {isElectron && workingDir ? (
+                                <p className="text-xs text-slate-500 flex items-center gap-1">
+                                    <FolderOpen size={10} /> {workingDir.split('/').slice(-2).join('/')}
+                                </p>
+                            ) : (
+                                <p className="text-xs text-slate-500">Requirements Visualization & Editing</p>
+                            )}
                         </div>
                     </div>
 
@@ -129,14 +182,25 @@ export default function SpecBoard() {
                         </div>
                     </div>
 
-                    {/* View Toggle - Right */}
-                    <div className="hidden md:flex bg-slate-900 rounded-lg p-1 border border-slate-800">
-                        <button onClick={() => setActiveView('board')} className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeView === 'board' ? 'bg-slate-700 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}>
-                            <Layout size={14} className="inline mr-2" /> Board
-                        </button>
-                        <button onClick={() => setActiveView('raw')} className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeView === 'raw' ? 'bg-slate-700 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}>
-                            <Code size={14} className="inline mr-2" /> Raw
-                        </button>
+                    {/* View Toggle + Save - Right */}
+                    <div className="hidden md:flex items-center gap-2">
+                        <div className="flex bg-slate-900 rounded-lg p-1 border border-slate-800">
+                            <button onClick={() => setActiveView('board')} className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeView === 'board' ? 'bg-slate-700 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}>
+                                <Layout size={14} className="inline mr-2" /> Board
+                            </button>
+                            <button onClick={() => setActiveView('raw')} className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeView === 'raw' ? 'bg-slate-700 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}>
+                                <Code size={14} className="inline mr-2" /> Raw
+                            </button>
+                        </div>
+                        {isElectron && (
+                            <button 
+                                onClick={handleSaveAll} 
+                                className="flex items-center gap-2 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition-all"
+                            >
+                                {showSaveFeedback ? <CheckCircle2 size={14} /> : <Save size={14} />}
+                                {showSaveFeedback ? 'Saved!' : 'Save All'}
+                            </button>
+                        )}
                     </div>
                 </div>
             </header>
