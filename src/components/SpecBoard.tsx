@@ -148,10 +148,10 @@ export default function SpecBoard() {
 
     return (
         <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-indigo-500/30">
-            <header className={`sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-6 py-4 ${isElectron ? 'pl-24' : ''}`}>
+            <header className={`sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-6 py-4 ${isElectron ? 'pl-24' : ''}`} style={isElectron ? { WebkitAppRegion: 'drag' } as React.CSSProperties : undefined}>
                 <div className="max-w-[1600px] mx-auto flex items-center">
                     {/* Logo - Left */}
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3" style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}>
                         <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
                             <Layout size={18} className="text-white" />
                         </div>
@@ -168,7 +168,7 @@ export default function SpecBoard() {
                     </div>
 
                     {/* Page Navigation - Center */}
-                    <div className="flex-1 flex justify-center">
+                    <div className="flex-1 flex justify-center" style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}>
                         <div className="flex bg-slate-900 rounded-lg p-1 border border-slate-800">
                             <button onClick={() => setActivePage('requirements')} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all flex items-center gap-2 ${activePage === 'requirements' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}>
                                 <FileText size={14} /> Requirements
@@ -183,7 +183,7 @@ export default function SpecBoard() {
                     </div>
 
                     {/* View Toggle + Save - Right */}
-                    <div className="hidden md:flex items-center gap-2">
+                    <div className="hidden md:flex items-center gap-2" style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}>
                         <div className="flex bg-slate-900 rounded-lg p-1 border border-slate-800">
                             <button onClick={() => setActiveView('board')} className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeView === 'board' ? 'bg-slate-700 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}>
                                 <Layout size={14} className="inline mr-2" /> Board
